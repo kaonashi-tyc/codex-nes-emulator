@@ -23,6 +23,12 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("rom", type=Path, help="Path to .nes ROM")
     parser.add_argument("--headless-frames", type=int, default=0, help="Run headless for N frames and exit")
     parser.add_argument("--scale", type=int, default=3, help="Window scale for interactive mode")
+    parser.add_argument(
+        "--ppu-backend",
+        choices=("auto", "python", "cython"),
+        default="auto",
+        help="PPU implementation backend",
+    )
     return parser.parse_args()
 
 
@@ -157,7 +163,8 @@ def _interactive(nes: NES, scale: int) -> int:
 
 def main() -> int:
     args = _parse_args()
-    nes = NES.from_rom(args.rom)
+    nes = NES.from_rom(args.rom, ppu_backend=args.ppu_backend)
+    print(f"PPU backend: {nes.ppu_backend}")
     if args.headless_frames > 0:
         return _headless(nes, args.headless_frames)
     return _interactive(nes, args.scale)

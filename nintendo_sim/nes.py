@@ -20,14 +20,16 @@ from .rom import Cartridge, load_ines
 @dataclass
 class NES:
     cartridge: Cartridge
+    ppu_backend: str = "auto"
 
     def __post_init__(self) -> None:
-        self.bus = Bus(self.cartridge)
+        self.bus = Bus(self.cartridge, ppu_backend=self.ppu_backend)
+        self.ppu_backend = self.bus.ppu_backend
         self.bus.reset()
 
     @classmethod
-    def from_rom(cls, rom_path: str | Path) -> "NES":
-        return cls(load_ines(rom_path))
+    def from_rom(cls, rom_path: str | Path, ppu_backend: str = "auto") -> "NES":
+        return cls(load_ines(rom_path), ppu_backend=ppu_backend)
 
     def reset(self) -> None:
         self.bus.reset()

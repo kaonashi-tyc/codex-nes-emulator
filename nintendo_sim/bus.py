@@ -5,20 +5,23 @@ from dataclasses import dataclass, field
 from .apu import APU
 from .controller import Controller
 from .cpu import CPU6502
-from .ppu import PPU
+from .ppu_backend import resolve_ppu_class
 from .rom import Cartridge
 
 
 @dataclass
 class Bus:
     cartridge: Cartridge
+    ppu_backend: str = "auto"
     cpu_ram: bytearray = field(default_factory=lambda: bytearray(2048))
     controller1: Controller = field(default_factory=Controller)
     controller2: Controller = field(default_factory=Controller)
 
     def __post_init__(self) -> None:
         self.apu = APU()
-        self.ppu = PPU(self.cartridge)
+        ppu_class, active_backend = resolve_ppu_class(self.ppu_backend)
+        self.ppu = ppu_class(self.cartridge)
+        self.ppu_backend = active_backend
         self.cpu = CPU6502(self.cpu_read, self.cpu_write)
         self.system_clock_counter = 0
 

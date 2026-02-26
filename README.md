@@ -17,10 +17,10 @@ This repository contains a from-scratch Python NES emulator implementation guide
 
 ## Run Super Mario Bros
 
-Install dependencies:
+Install (builds the Cython PPU during wheel build, without writing `.so` into source):
 
 ```bash
-pip install -r requirements.txt
+python -m pip install .
 ```
 
 Launch:
@@ -28,6 +28,21 @@ Launch:
 ```bash
 python run_nes.py "rom/Super Mario Bro.nes"
 ```
+
+Choose PPU backend explicitly (default is `auto`):
+
+```bash
+python run_nes.py "rom/Super Mario Bro.nes" --ppu-backend cython
+python run_nes.py "rom/Super Mario Bro.nes" --ppu-backend python
+```
+
+If you only want Python dependencies (no package build), you can still do:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Note: `pip install -e .` (editable mode) may place extension artifacts in the source tree on setuptools.
 
 Controls:
 
@@ -51,3 +66,8 @@ Run an entire folder:
 python run_test_roms.py testsuites/instr_test-v5
 ```
 
+Run tests against a specific PPU backend:
+
+```bash
+python run_test_roms.py testsuites/instr_test-v5 --ppu-backend cython
+```

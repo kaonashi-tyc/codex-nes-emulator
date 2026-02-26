@@ -41,8 +41,8 @@ def _read_ascii(nes: NES, start_addr: int, limit: int = 512) -> str:
     return "".join(chars).strip()
 
 
-def run_test_rom(rom_path: Path, max_instructions: int = 5_000_000) -> TestResult:
-    nes = NES.from_rom(rom_path)
+def run_test_rom(rom_path: Path, max_instructions: int = 5_000_000, ppu_backend: str = "auto") -> TestResult:
+    nes = NES.from_rom(rom_path, ppu_backend=ppu_backend)
     status = 0xFF
     message = ""
     frames = 0
@@ -143,6 +143,12 @@ def main() -> int:
     )
     parser.add_argument("path", type=Path, help="ROM file or directory")
     parser.add_argument("--max-instructions", type=int, default=5_000_000, help="Instruction timeout per ROM")
+    parser.add_argument(
+        "--ppu-backend",
+        choices=("auto", "python", "cython"),
+        default="auto",
+        help="PPU implementation backend",
+    )
     args = parser.parse_args()
 
     roms = _iter_nes_files(args.path)
@@ -152,7 +158,7 @@ def main() -> int:
 
     failed = 0
     for rom in roms:
-        result = run_test_rom(rom, args.max_instructions)
+        result = run_test_rom(rom, args.max_instructions, ppu_backend=args.ppu_backend)
         status = "PASS" if result.passed else "FAIL"
         print(
             f"{status:4} [{result.protocol}] {rom} "
