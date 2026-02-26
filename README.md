@@ -1,17 +1,27 @@
 # Nintendo Sim (Python NES Emulator)
 
-## Demo Recording
+## Demo
 
-<video src="https://raw.githubusercontent.com/kaonashi-tyc/codex-nes-emulator/main/demo/demo.mp4" controls width="60%"></video>
-
-If the embedded player does not render in your client:
-
-- [Play `demo.mp4`](https://raw.githubusercontent.com/kaonashi-tyc/codex-nes-emulator/main/demo/demo.mp4)
-- [Download `demo.mov`](demo/demo.mov)
+<img src="demo/demo.gif" alt="NES gameplay demo" width="60%">
 
 This repository contains a from-scratch Python NES emulator implementation guided by `NESDoc.pdf`.
 
-## Implemented
+## How It Was Built
+
+This emulator was built mostly from scratch with the Codex app (GPT 5.3 Codex, xhigh).
+
+### Step 1: Research
+I asked Codex to find test suites and developer documentation (including `NESDoc.pdf`) and save them locally. Codex was explicitly told not to look at other emulator implementations.
+
+### Step 2: Implementation
+Codex iterated on the emulator until the test suites passed. This took multiple prompts, but most of them were simply “continue”.
+
+### Step 3: Optimization
+The first Python implementation was too slow, so with some manual guidance I profiled it (flamegraph) and asked Codex to rewrite the PPU in Cython using pre-allocation to speed up rendering.
+
+The whole thing took about 1 hour and around 2% of my weekly usage as a Pro subscriber.
+
+## What is Implemented
 
 - 6502 CPU core (official opcodes + major undocumented opcodes)
 - iNES ROM loader
@@ -34,16 +44,6 @@ source .venv/bin/activate
 python -m pip install -U pip
 python -m pip install .
 ```
-
-If `pip3 install .` fails on macOS/Homebrew with `error: externally-managed-environment`, you are installing into a system-managed Python (PEP 668). Use the virtual environment steps above and run `python -m pip install .` after activation.
-
-You can bypass the protection with:
-
-```bash
-python3 -m pip install --break-system-packages .
-```
-
-but this is not recommended because it can break your system/Homebrew Python environment.
 
 Launch:
 
