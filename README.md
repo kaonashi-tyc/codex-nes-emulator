@@ -17,11 +17,24 @@ This repository contains a from-scratch Python NES emulator implementation guide
 
 ## Run Super Mario Bros
 
-Install (builds the Cython PPU during wheel build, without writing `.so` into source):
+Install (recommended: use a virtual environment; builds the Cython PPU during wheel build without writing `.so` into source):
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip
 python -m pip install .
 ```
+
+If `pip3 install .` fails on macOS/Homebrew with `error: externally-managed-environment`, you are installing into a system-managed Python (PEP 668). Use the virtual environment steps above and run `python -m pip install .` after activation.
+
+You can bypass the protection with:
+
+```bash
+python3 -m pip install --break-system-packages .
+```
+
+but this is not recommended because it can break your system/Homebrew Python environment.
 
 Launch:
 
