@@ -1,5 +1,14 @@
 # Nintendo Sim (Python NES Emulator)
 
+## Demo Recording
+
+<video src="https://raw.githubusercontent.com/kaonashi-tyc/codex-nes-emulator/main/demo/demo.mp4" controls width="60%"></video>
+
+If the embedded player does not render in your client:
+
+- [Play `demo.mp4`](https://raw.githubusercontent.com/kaonashi-tyc/codex-nes-emulator/main/demo/demo.mp4)
+- [Download `demo.mov`](demo/demo.mov)
+
 This repository contains a from-scratch Python NES emulator implementation guided by `NESDoc.pdf`.
 
 ## Implemented
