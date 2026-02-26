@@ -1,0 +1,35 @@
+frames=120 elapsed=21.004s fps=5.713
+
+  _     ._   __/__   _ _  _  _ _/_   Recorded: 23:22:06  Samples:  20998
+ /_//_/// /_\ / //_// / //_'/ //     Duration: 21.012    CPU time: 20.912
+/   _/                      v5.1.2
+
+Program: profiling/bench_smb.py
+
+21.011 <module>  bench_smb.py:1
+└─ 21.005 NES.step_frame  nintendo_sim/nes.py:38
+   └─ 20.891 Bus.step  nintendo_sim/bus.py:109
+      ├─ 18.127 Bus.clock_cpu_cycles  nintendo_sim/bus.py:77
+      │  ├─ 15.186 PPU.clock  nintendo_sim/ppu.py:447
+      │  │  ├─ 10.360 [self]  nintendo_sim/ppu.py
+      │  │  ├─ 2.277 PPU._update_shifters  nintendo_sim/ppu.py:235
+      │  │  ├─ 1.525 PPU.ppu_read  nintendo_sim/ppu.py:275
+      │  │  │  ├─ 0.624 [self]  nintendo_sim/ppu.py
+      │  │  │  ├─ 0.526 PPU._map_nametable_addr  nintendo_sim/ppu.py:258
+      │  │  │  └─ 0.375 Mapper0.ppu_read  nintendo_sim/mapper.py:74
+      │  │  ├─ 0.592 PPU._clock_sprite_evaluation  nintendo_sim/ppu.py:386
+      │  │  └─ 0.316 PPU._load_background_shifters  nintendo_sim/ppu.py:227
+      │  ├─ 2.310 [self]  nintendo_sim/bus.py
+      │  └─ 0.289 APU.clock  nintendo_sim/apu.py:38
+      ├─ 2.498 CPU6502.step  nintendo_sim/cpu.py:131
+      │  ├─ 0.737 CPU6502._ABS  nintendo_sim/cpu.py:201
+      │  │  └─ 0.552 Bus.cpu_read  nintendo_sim/bus.py:25
+      │  │     └─ 0.360 Mapper0.cpu_read  nintendo_sim/mapper.py:56
+      │  ├─ 0.564 [self]  nintendo_sim/cpu.py
+      │  └─ 0.491 Bus.cpu_read  nintendo_sim/bus.py:25
+      │     └─ 0.333 Mapper0.cpu_read  nintendo_sim/mapper.py:56
+      └─ 0.266 [self]  nintendo_sim/bus.py
+
+To view this report with different options, run:
+    pyinstrument --load-prev 2026-02-25T23-22-06 [options]
+
