@@ -9,6 +9,7 @@ build/
 dist/
 .venv/
 .venv312/
+.idea/
 .DS_Store
 nintendo_sim/ppu_cython.c
 rom/
